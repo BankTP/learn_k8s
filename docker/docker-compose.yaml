@@ -1,0 +1,14 @@
+services:
+    frontend:
+        image: localhost:5000/learn/frontend
+    backend:
+        image: localhost:5000/learn/backend
+    nginx:
+        build: ./nginx
+        ports:
+            - "9000:80"
+        links:
+            - backend
+            - frontend
+    
+    

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database-deployment
+  namespace: learn
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: database
+  template:
+    metadata:
+      labels:
+        component: database
+    spec:
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: database-persistent-volume-claim
+      containers:
+        - name: database
+          image: postgres
+          env:
+            - name: POSTGRES_PASSWORD
+              value: '1234'
+            - name: POSTGRES_USER
+              value: 'postgres'
+            - name: POSTGRES_DB
+              value: 'random_number'
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+              subPath: postgres

@@ -1,0 +1,5 @@
+frontend:
+    image: node:alpine
+    volumns:
+        - "./:/app"
+    command: "cd /app && npm run serve"

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  namespace: learn
+spec:
+  replicas: 2
+  selector: 
+    matchLabels:
+      component: backend
+  template:
+    metadata:
+      labels:
+        component: backend
+    spec:
+      containers:
+        - name: backend
+          image: localhost:5000/learn/backend
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DB_HOST
+              value: database-ip-service
+            - name: DB_PORT
+              value: '5432'
+            - name: DB_PASSWORD
+              value: '1234'
+            - name: DB_USER
+              value: postgres
+            - name: DB_DATABASE
+              value: random_number
+            
